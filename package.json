@@ -1,0 +1,19 @@
+{
+  "name": "fullstackopen-2021-phonebook-be",
+  "version": "1.0.0",
+  "description": "Fullstack Open 2021 Phonebook Backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "Alexander Rybin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
