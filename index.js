@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 let persons = [
     {
         name: "Arto Hellas",
@@ -46,5 +48,19 @@ app.delete('/api/persons/:id/', ((req, res) => {
 app.get('/info/', (request, response) => {
     response.send(`Phonebook has info for ${persons.length} people<br/>${new Date().toString()}`)
 })
+
+app.post('/api/persons/', ((req, res) => {
+    const newEntry = {
+        name: req.body.name,
+        number: req.body.number,
+        id: Math.trunc(Math.random() * 10000)
+    }
+
+    console.log(req.body)
+
+    persons = persons.concat(newEntry)
+
+    res.json(newEntry)
+}))
 
 app.listen(3001)
