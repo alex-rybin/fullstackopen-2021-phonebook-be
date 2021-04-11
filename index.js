@@ -50,6 +50,14 @@ app.get('/info/', (request, response) => {
 })
 
 app.post('/api/persons/', ((req, res) => {
+    if (!req.body.name) {
+        return res.status(400).json({error: 'Name is missing'})
+    } else if (!req.body.number) {
+        return res.status(400).json({error: 'Number is missing'})
+    } else if (persons.map(person => person.name).includes(req.body.name)) {
+        return res.status(400).send({error: 'Name already exists'})
+    }
+
     const newEntry = {
         name: req.body.name,
         number: req.body.number,
