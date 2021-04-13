@@ -1,7 +1,10 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+app.use(morgan('tiny'))
+
 
 let persons = [
     {
@@ -63,8 +66,6 @@ app.post('/api/persons/', ((req, res) => {
         number: req.body.number,
         id: Math.trunc(Math.random() * 10000)
     }
-
-    console.log(req.body)
 
     persons = persons.concat(newEntry)
 
