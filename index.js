@@ -1,10 +1,13 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
+
 const app = express()
 
 morgan.token('body', (req, res) => JSON.stringify(req.body))
 
 app.use(express.json())
+app.use(cors())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 
@@ -31,11 +34,11 @@ let persons = [
     }
 ]
 
-app.get('/api/persons/', (request, response) => {
+app.get('/persons/', (request, response) => {
     response.json(persons)
 })
 
-app.get('/api/persons/:id/', (request, response) => {
+app.get('/persons/:id/', (request, response) => {
     const person = persons.find(person => person.id === Number(request.params.id))
 
     if (person) {
@@ -45,7 +48,7 @@ app.get('/api/persons/:id/', (request, response) => {
     }
 })
 
-app.delete('/api/persons/:id/', ((req, res) => {
+app.delete('/persons/:id/', ((req, res) => {
     persons = persons.filter(person => person.id !== Number(req.params.id))
     res.status(204).send()
 }))
@@ -54,7 +57,7 @@ app.get('/info/', (request, response) => {
     response.send(`Phonebook has info for ${persons.length} people<br/>${new Date().toString()}`)
 })
 
-app.post('/api/persons/', ((req, res) => {
+app.post('/persons/', ((req, res) => {
     if (!req.body.name) {
         return res.status(400).json({error: 'Name is missing'})
     } else if (!req.body.number) {
