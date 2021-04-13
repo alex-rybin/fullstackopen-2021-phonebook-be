@@ -77,4 +77,4 @@ app.post('/persons/', ((req, res) => {
     res.json(newEntry)
 }))
 
-app.listen(3001)
+app.listen(process.env.PORT || 3001)
