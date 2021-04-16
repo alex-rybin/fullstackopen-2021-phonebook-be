@@ -67,19 +67,13 @@ app.post('/persons/', ((req, res) => {
         return res.status(400).json({error: 'Name is missing'})
     } else if (!req.body.number) {
         return res.status(400).json({error: 'Number is missing'})
-    } else if (persons.map(person => person.name).includes(req.body.name)) {
-        return res.status(400).send({error: 'Name already exists'})
     }
 
-    const newEntry = {
-        name: req.body.name,
-        number: req.body.number,
-        id: Math.trunc(Math.random() * 10000)
-    }
+    const person = new Person(req.body)
 
-    persons = persons.concat(newEntry)
-
-    res.json(newEntry)
+    person.save().then(savedPerson => {
+        res.json(savedPerson)
+    })
 }))
 
 app.listen(process.env.PORT || 3001)
