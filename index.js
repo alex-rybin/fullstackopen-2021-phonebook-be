@@ -50,14 +50,18 @@ app.get('/persons/', (req, res, next) => {
         .catch(error => next(error))
 })
 
-app.get('/persons/:id/', (req, res) => {
-    const person = persons.find(person => person.id === Number(req.params.id))
-
-    if (person) {
-        res.json(person)
-    } else {
-        res.status(404).send()
+app.get('/persons/:id/', (req, res, next) => {
+    const handleFind = result => {
+        if (result) {
+            res.json(result)
+        } else {
+            res.status(404).send()
+        }
     }
+
+    Person.findById(req.params.id)
+        .then(handleFind)
+        .catch(next)
 })
 
 app.delete('/persons/:id/', ((req, res, next) => {
