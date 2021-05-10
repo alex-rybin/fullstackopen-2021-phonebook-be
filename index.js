@@ -54,8 +54,9 @@ app.get('/persons/:id/', (request, response) => {
 })
 
 app.delete('/persons/:id/', ((req, res) => {
-    persons = persons.filter(person => person.id !== Number(req.params.id))
-    res.status(204).send()
+    Person.findByIdAndDelete(req.params.id)
+        .then(result => res.status(204).send())
+        .catch(error => res.status(500).json({error}))
 }))
 
 app.get('/info/', (request, response) => {
