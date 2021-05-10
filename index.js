@@ -70,8 +70,10 @@ app.delete('/persons/:id/', ((req, res, next) => {
         .catch(error => next(error))
 }))
 
-app.get('/info/', (req, res) => {
-    res.send(`Phonebook has info for ${persons.length} people<br/>${new Date().toString()}`)
+app.get('/info/', (req, res, next) => {
+    Person.count()
+        .then(count => res.send(`Phonebook has info for ${count} people<br/>${new Date().toString()}`))
+        .catch(next)
 })
 
 app.post('/persons/', ((req, res, next) => {
