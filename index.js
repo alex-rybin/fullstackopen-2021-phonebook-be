@@ -84,6 +84,14 @@ app.post('/persons/', ((req, res, next) => {
         .catch(error => next(error))
 }))
 
+app.put('/persons/:id/', ((req, res, next) => {
+    const person = {number: req.body.number}
+
+    Person.findByIdAndUpdate(req.params.id, person, {new: true})
+        .then(updatedPerson => res.json(updatedPerson))
+        .catch(error => next(error))
+}))
+
 app.use(errorHandler)
 
 app.listen(process.env.PORT || 3001)
