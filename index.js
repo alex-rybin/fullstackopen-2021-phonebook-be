@@ -20,7 +20,7 @@ const errorHandler = (error, req, res, next) => {
         return res.status(400).send({error: error.message})
     }
 
-    return error => res.status(500).send({error: error.message})
+    next(error)
 }
 
 
@@ -46,7 +46,7 @@ app.get('/persons/:id/', (req, res, next) => {
 
 app.delete('/persons/:id/', ((req, res, next) => {
     Person.findByIdAndDelete(req.params.id)
-        .then(result => res.status(204).send())
+        .then(() => res.status(204).send())
         .catch(error => next(error))
 }))
 
